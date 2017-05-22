@@ -1,0 +1,19 @@
+Spring JDBC Template Simple Example
+http://www.codejava.net/frameworks/spring/spring-jdbc-template-simple-example
+Spring JDBC: An example on JdbcTemplate using Annotation
+http://www.benchresources.net/spring-jdbc-an-example-on-jdbctemplate-using-annotation/
+How to use log4j in Spring MVC
+http://www.codejava.net/frameworks/spring/how-to-use-log4j-in-spring-mvc
+
+Configuring Spring MVC JdbcTemplate with JNDI Data Source in Tomcat
+http://www.codejava.net/frameworks/spring/configuring-spring-mvc-jdbctemplate-with-jndi-data-source-in-tomcat
+Spring 4 Ehcache Configuration Example with @Cacheable Annotation
+http://www.concretepage.com/spring-4/spring-4-ehcache-configuration-example-with-cacheable-annotation
+JDBC Template + EH Cache thru annotations
+http://rama-palaniappan.blogspot.in/2014/03/jdbc-template-eh-cache-thru-annotations.html
+https://github.com/smitchell/SpringJdbcEcache/tree/master/src
+Integrating Spring and EHCache
+http://byteco.de/2010/01/26/integrating-spring-and-ehcache/
+Cache Spring JDBC template using ehcache annotations
+https://thomsun.wordpress.com/2011/08/18/cache-spring-jdbc-template-using-ehcache-annotations/
+
