@@ -46,3 +46,52 @@ session
 
 https://www.javacodegeeks.com/2013/04/spring-mvc-session-tutorial.html
 
+
+Spring WS Consume Soap Service from WSDL
+
+
+
+http://memorynotfound.com/spring-ws-consume-soap-service-wsdl/
+How to consume SOAP web service using Spring
+
+https://github.com/MafaldaLandeiro/SpringSOAPServiceConsume
+https://howtodevelopit.wordpress.com/2016/03/11/how-to-consume-soap-web-service-using-spring/
+
+
+Spring WS - SOAP Web Service Consumer Provider WSDL Example
+
+https://www.codenotfound.com/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html
+
+
+Spring WS - MVC: Implementing a Client Tutorial
+http://krams915.blogspot.in/2010/12/spring-ws-mvc-implementing-client.html
+
+
+How to consume third party WSDL services in Spring MVC
+
+https://stackoverflow.com/questions/26796149/how-to-consume-third-party-wsdl-services-in-spring-mvc
+
+
+
+@mock
+service service
+
+@InjectMock
+Controller
+
+Privtae MOckMVC mockmvc
+
+@before
+public void setup()
+{
+MockToAnnotation.initMock(this);
+MockMvc= mockMVCBuilder.standaloneSetup(controller).build();
+
+}
+
+public void test() throws exception
+
+{list <customer)-neew)
+
+when(customer.alllist).thenreturn(list)customer)
+mockmvc.perform("/method/list)).andexpect(); 
