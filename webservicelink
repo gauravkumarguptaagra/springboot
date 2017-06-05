@@ -1,0 +1,76 @@
+http://krams915.blogspot.in/2010/12/spring-ws-mvc-implementing-client.html
+
+http://stellentsoft.com/consuming-3rd-party-soap-services-in-spring-application/
+
+http://blog.vinodsingh.com/2008/11/consuming-web-services-with-spring.html
+
+property place holder example
+
+http://www.concretepage.com/spring/spring-propertyplaceholderconfigurer-example-using-annotation-and-xml-to-externalize-property-values#xml
+
+https://www.javacodegeeks.com/2013/07/spring-bean-and-propertyplaceholderconfigurer.html
+
+
+
+
+https://examples.javacodegeeks.com/enterprise-java/spring/jdbc/spring-transaction-management-example-with-jdbc-example/
+http://www.javacreed.com/transactions-with-jdbctemplate/
+
+log4j example
+http://alvinalexander.com/blog/post/java/simple-log4j-example
+http://www.codejava.net/coding/how-to-configure-log4j-as-logging-mechanism-in-java
+
+
+
+transction:-
+datasourcetransctionmanager
+<beanid =transctuionmanager class="org.springframework.jdbc.datasource.datasoruce transctionmanager>
+proprtyName="datasource ref=datasource">
+
+propagation:- new tranction ya exist
+progation_mandatory :methiod run in tranction and nothing exist throw ecxeption
+
+progation _nested :- 
+progation_never :-
+
+progation_not_support
+progation reqwuired
+
+progation_required_new
+
+progation_support
+
+
+
+isolation :- insoure ingration of data 
+
+dirty read :- when tranction read un commited data
+
+non repatable read 
+phantom read  
+
+
+islation _default
+islatio_read_uncommited
+
+isolation read commited
+isloation_repeative reaf
+islation_serilizable
+
+
+
+reaADONLY
+read some data only
+
+rollback and time out
+
+time out
+propation_required
+propation_requred_new
+progation_nested
+
+
+
+
+
+
