@@ -90,3 +90,40 @@ https://gist.github.com/mdellabitta/1444003
 
 
 
+JSR validation link
+
+
+https://www.intertech.com/Blog/spring-framework-jsr-303-validation-and-custom-messages/
+
+https://discuss.pivotal.io/hc/en-us/articles/202653128-Integrating-JSR-303-Bean-Validation-into-Spring-Framework-Applications
+
+
+http://www.raistudies.com/spring/spring-mvc/form-validation-spring-mvc-3-hibernate-validator-jsr-303/
+http://blog.trifork.com/2009/08/04/bean-validation-integrating-jsr-303-with-spring/
+https://visola.github.io/2012/04/14/bean-validation-jsr-303-and-spring-mvc/
+
+https://www.boraji.com/spring-4-mvc-form-validation-example-using-hibernate-validator
+
+
+
+
+
+junit for controller 
+
+https://www.petrikainulainen.net/programming/spring-framework/unit-testing-of-spring-mvc-controllers-normal-controllers/
+
+https://www.javacodegeeks.com/2012/10/spring-mvc-controller-junit-testing.html
+
+
+
+https://myshittycode.com/2013/10/23/how-to-unit-test-spring-mvc-controller/
+
+https://krishnasblog.com/2013/02/21/junit-testing-of-spring-mvc-application-testing-service-layer/
+
+for jdbc template  junit 
+
+
+https://github.com/APNIC-net/spring-jdbctemplate-streams/blob/master/src/test/java/net/apnic/example/jdbcstream/JdbcPerformanceTest.java
+https://alvinalexander.com/blog/post/jdbc/how-test-java-spring-framework-jdbc-code
+
+
