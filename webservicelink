@@ -135,3 +135,203 @@ https://stackoverflow.com/questions/32052076/how-to-get-the-current-logged-in-us
 https://stackoverflow.com/questions/29100487/how-to-get-the-role-that-a-user-logged-in-with-in-my-controller-using-spring-sec
 https://stackoverflow.com/questions/6161985/get-userdetails-object-from-security-context-in-spring-mvc-controller
 
+
+
+
+ESAPI
+..........................................................
+https://jeevanpatil.wordpress.com/2011/07/22/prevention_of_xss/
+
+http://www.jtmelton.com/2010/08/17/the-owasp-top-ten-and-esapi-part-11-failure-to-restrict-url-access/
+http://www.amimoderne.com/spring-mvc-form-validation-how-to-make-field-optional/
+
+https://www.youtube.com/playlist?list=PLT_PPCeXuu64Nt71iBwTS8tss4FtmeRwO
+
+http://relishcode.com/xss-prevention-using-input-validation/
+
+http://abhisheksaxena29.blogspot.in/2014/12/input-validation-using-owasp-esapi.html
+
+https://book2s.com/java/api/org/owasp/esapi/validator/validator.html
+
+
+code :-
+
+o avoid XSS security threat in spring application
+Posted: July 22, 2011 in Spring 2.5.6	
+0
+Prevention of XSS (Cross Site Scripting) :
+
+XSS (Cross-site Scripting) is one of the most common vulnerabilities with a web-application. And, it can be
+exploited by hackers very easily without using any sophisticated tool.
+
+How does it work?
+Most web applications have forms to receive inputs from user. A form having textfield can be exploited by a hacker.
+A hacker can input javascript code e.g. <script></script> or eval(“”) in the *userid* textfield. When the form is
+submitted, the server does process it & returns. This is not the scenario we want to happen.
+
+Suppose your form looks like this (using spring tags) :
+
+<form:form id="personForm">
+<form:input path="name" />
+<input type="submit" value="Submit">
+</form:form>
+The hacker may input something like ” jeevan<script>alert(“I won.”)</script> ”  in the textfield.
+When the page is submitted, the page is returned with error as the user is not authenticated.
+
+Solution:
+If the input-text is changed into the html-escape-sequences during processing on server, then browser will receive
+the escape-sequences. The resultant text would not be a valid java-script and browser will not execute it.
+
+After conversion into html-escape-sequences, the above code would look like:
+
+<form id="personForm">
+<input type="text" name="name" value="&quot;&gt;Hacker&lt;script&gt;alert(&quot;I am destroyer&quot;);&lt;/script&gt;"/>
+<input type="submit" value="Submit">
+</form>
+Since all instances of characters ‘<‘, ‘>’ and other non-alpha-numeric characters are converted into html-character-sequence,
+it is no longer a java-script code. So, it will not be executed by the browser.
+
+Solution with Spring MVC In Spring-MVC, form-tags are used to create jsp page. Spring MVC provides multiple options
+to encode the html-escape-sequences on server side.
+
+At global level, it can be defined in web.xml file. This will be applicable to entire application. All form-tags would refer
+to this definition. The sample code is shown below:
+<context-param>
+<param-name>defaultHtmlEscape</param-name>
+<param-value>true</param-value>
+</context-param>
+At page level, it is defined as a tag-declaration. The code is: Any form-tag, after the above declaration uses
+html-escape-sequence-encoding.
+  <spring:htmlEscape defaultHtmlEscape="true" />
+Third option is to define it as attribute for each form-tag. For example, a input-text can be defined as :
+  <form:input path="name" htmlEscape="true" />
+Depending upon requirement, it can be implemented as global, page or tag level.
+
+Filter Approach:
+ Another solution to the XSS issue is to filter all the textfields in the form at the time of submitting the form.
+It needs XML entry in the web.xml file & two simple classes.
+
+The code for the  first class named CrossScriptingFilter.java is :
+
+package com.filter;
+
+import java.io.IOException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.Logger;
+
+public class CrossScriptingFilter implements Filter {
+	private static Logger logger = Logger.getLogger(CrossScriptingFilter.class);
+    private FilterConfig filterConfig;
+
+	public void init(FilterConfig filterConfig) throws ServletException {
+        this.filterConfig = filterConfig;
+    }
+
+    public void destroy() {
+        this.filterConfig = null;
+    }
+
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+        throws IOException, ServletException {
+    	logger.info("Inlter CrossScriptingFilter  ...............");
+        chain.doFilter(new RequestWrapper((HttpServletRequest) request), response);
+        logger.info("Outlter CrossScriptingFilter ...............");
+    }
+
+}
+The code second class named RequestWrapper.java is :
+
+package com.filter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+
+import org.apache.log4j.Logger;
+
+public final class RequestWrapper extends HttpServletRequestWrapper {
+	private static Logger logger = Logger.getLogger(RequestWrapper.class);
+	public RequestWrapper(HttpServletRequest servletRequest) {
+		super(servletRequest);
+	}
+
+	public String[] getParameterValues(String parameter) {
+		logger.info("InarameterValues .. parameter .......");
+		String[] values = super.getParameterValues(parameter);
+		if (values == null) {
+			return null;
+		}
+		int count = values.length;
+		String[] encodedValues = new String[count];
+		for (int i = 0; i < count; i++) {
+			encodedValues[i] = cleanXSS(values[i]);
+		}
+		return encodedValues;
+	}
+
+	public String getParameter(String parameter) {
+		logger.info("Inarameter .. parameter .......");
+		String value = super.getParameter(parameter);
+		if (value == null) {
+			return null;
+		}
+		logger.info("Inarameter RequestWrapper ........ value .......");
+		return cleanXSS(value);
+	}
+
+	public String getHeader(String name) {
+		logger.info("Ineader .. parameter .......");
+		String value = super.getHeader(name);
+		if (value == null)
+			return null;
+		logger.info("Ineader RequestWrapper ........... value ....");
+		return cleanXSS(value);
+	}
+
+	private String cleanXSS(String value) {
+		// You'll need to remove the spaces from the html entities below
+		logger.info("InnXSS RequestWrapper ..............." + value);
+		//value = value.replaceAll("<", "& lt;").replaceAll(">", "& gt;");
+		//value = value.replaceAll("\\(", "& #40;").replaceAll("\\)", "& #41;");
+		//value = value.replaceAll("'", "& #39;");
+		value = value.replaceAll("eval\\((.*)\\)", "");
+		value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "\"\"");
+
+		value = value.replaceAll("(?i)<script.*?>.*?<script.*?>", "");
+		value = value.replaceAll("(?i)<script.*?>.*?</script.*?>", "");
+		value = value.replaceAll("(?i)<.*?javascript:.*?>.*?</.*?>", "");
+		value = value.replaceAll("(?i)<.*?\\s+on.*?>.*?</.*?>", "");
+		//value = value.replaceAll("<script>", "");
+		//value = value.replaceAll("</script>", "");
+		logger.info("OutnXSS RequestWrapper ........ value ......." + value);
+		return value;
+	}
+}
+The only thing remained is the XML entry in the web.xml file:
+
+        <filter>
+		<filter-name>XSS</filter-name>
+		<display-name>XSS</display-name>
+		<description></description>
+		<filter-class>com.filter.CrossScriptingFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>XSS</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+The <url-pattern>/*</url-pattern> indicates that for every request made from browser, it will call
+CrossScriptingFilter  class. Which will parse all the components/elements came from the request &
+will replace all the javascript tags put by hacker with empty string i.e. “”.
+
+We have fours approaches to prevent the XSS threat.
+You have to choose the approach according to your need.
+
+Thanks
+
+Advertisements
